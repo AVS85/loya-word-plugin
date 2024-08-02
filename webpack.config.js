@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-
+const packageJson = require("./package.json");
 const devCerts = require("office-addin-dev-certs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,13 +7,15 @@ const webpack = require("webpack");
 const path = require("path");
 
 const urlDev = "https://localhost:3000/";
-const urlProd = "https://loya-word-plugin.vercel.app/";
-// const urlProd = "https://www.contoso.com/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+const urlProd = "https://app.loya.legal/plugin/";
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
   return { ca: httpsOptions.ca, key: httpsOptions.key, cert: httpsOptions.cert };
 }
+
+const appBuildDate = new Date();
+const appBuildVersion = `Build:  ${appBuildDate.getHours()}${appBuildDate.getMinutes()}`;
 
 module.exports = async (env, options) => {
   const dev = options.mode === "development";
@@ -26,7 +28,7 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.ts",
     },
     output: {
-      path: path.resolve(__dirname, "public"),
+      path: path.resolve(__dirname, "build"),
       clean: true,
     },
     resolve: {
@@ -96,6 +98,12 @@ module.exports = async (env, options) => {
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
       }),
+      new webpack.DefinePlugin({
+        "process.env.APP_SET_MOCK": JSON.stringify(process.env.APP_SET_MOCK),
+        "process.env.APP_SET_ANONYMIZER": JSON.stringify(process.env.APP_SET_ANONYMIZER),
+        "process.env.appVersion": JSON.stringify(packageJson.version),
+        "process.env.appBuildDate": JSON.stringify(appBuildVersion),
+      }),
     ],
     devServer: {
       hot: true,
@@ -109,7 +117,8 @@ module.exports = async (env, options) => {
       port: process.env.npm_package_config_dev_server_port || 3000,
       proxy: {
         "/v1": {
-          target: `http://ec2-13-53-249-255.eu-north-1.compute.amazonaws.com:8080`,
+          target: `https://app.loya.legal`,
+          // target: `http://ec2-13-53-249-255.eu-north-1.compute.amazonaws.com:8080`,
           secure: false,
           changeOrigin: true,
         },

@@ -1,4 +1,26 @@
 {
   "eslint.validate": ["javascript", "javascriptreact", "typescript"],
-  "cSpell.words": ["Сhoosing", "Customizer", "fluentui", "Griffel", "Punct", "Readlines", "Requrement", "taskpane"]
+  "cSpell.words": [
+    "Анонимайзер",
+    "анонимизацию",
+    "анонимизированный",
+    "плейбук",
+    "Плейбуки",
+    "стор",
+    "сторе",
+    "Сhoosing",
+    "addin",
+    "anmzr",
+    "autorun",
+    "Customizer",
+    "fluentui",
+    "Griffel",
+    "loya",
+    "normilized",
+    "Punct",
+    "Readlines",
+    "Requrement",
+    "Speransky",
+    "taskpane"
+  ]
 }

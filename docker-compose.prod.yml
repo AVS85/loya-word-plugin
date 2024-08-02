@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: loya-plugin-anonymazer-local
+    image: avs85/loya-plugin-anonymazer-local
+    build:
+      context: .
+      target: production

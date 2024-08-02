@@ -17,7 +17,7 @@
     }
   },
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "cross-env APP_SET_MOCK=true webpack --mode production",
     "build-anonymizer": "cross-env APP_SET_ANONYMIZER=true webpack --mode production",
     "build:dev": "webpack --mode development",
     "dev-server": "webpack serve --mode development",

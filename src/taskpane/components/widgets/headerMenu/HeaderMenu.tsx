@@ -29,8 +29,8 @@ const T = {
     en: "Recommendation",
   },
   default: {
-    ru: "Сперанский",
-    en: "Speransky",
+    ru: "Сперанский (vercel)",
+    en: "Speransky (vercel)",
   },
 };
 

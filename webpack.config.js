@@ -28,7 +28,7 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.ts",
     },
     output: {
-      path: path.resolve(__dirname, "build"),
+      path: path.resolve(__dirname, "public"),
       clean: true,
     },
     resolve: {

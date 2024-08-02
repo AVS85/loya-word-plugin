@@ -22,9 +22,9 @@ export class DocumentHelpers {
       /** Применение изменений */
       const findRange = await DocumentHelpers.findRange(context, searchText);
       findRange.clear();
+      await context.sync();
       const trackedChangeR = findRange.getTrackedChanges();
       context.load(trackedChangeR, "items");
-      await context.sync();
       console.log("trackedChangeR", trackedChangeR);
       
       trackedChangeR.getFirst().accept();

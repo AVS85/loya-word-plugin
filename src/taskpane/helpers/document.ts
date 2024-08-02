@@ -25,7 +25,8 @@ export class DocumentHelpers {
       const trackedChangeR = findRange.getTrackedChanges();
       context.load(trackedChangeR, "items");
       await context.sync();
-      trackedChangeR.items[0].accept();
+      trackedChangeR.getFirst().accept();
+      // trackedChangeR.items[0].accept();
 
       /** Сборка новой строки по массиву отличий */
       for (const diffItem of differencesArray) {

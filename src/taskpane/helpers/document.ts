@@ -25,6 +25,7 @@ export class DocumentHelpers {
       await context.sync();
       const trackedChangeR = findRange.getTrackedChanges();
       context.load(trackedChangeR, "items");
+      await context.sync();
       console.log("trackedChangeR", trackedChangeR);
       
       trackedChangeR.getFirst().accept();

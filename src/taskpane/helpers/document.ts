@@ -43,11 +43,14 @@ export class DocumentHelpers {
           context.load(insertedItem, "text");
           await context.sync();
 
+          const trackedChangeItem = insertedItem.getTrackedChanges();
+          context.load(trackedChangeItem, "items");
+          await context.sync();
+
+          console.log("trackedChangeItem", trackedChangeItem);
+
           if (isStable) {
             /** если элемент без изменений - принимаем правку */
-            const trackedChangeItem = insertedItem.getTrackedChanges();
-            context.load(trackedChangeItem, "items");
-            await context.sync();
             trackedChangeItem.items[0].accept();
           }
 
@@ -59,9 +62,9 @@ export class DocumentHelpers {
             /** если элемент удален - сначала подтверждаем вставку
              * (чтобы добавилась запись в истории рецензирования), потом удаляем
              */
-            const trackedChangeItem = insertedItem.getTrackedChanges();
-            context.load(trackedChangeItem, "items");
-            await context.sync();
+            // const trackedChangeItem = insertedItem.getTrackedChanges();
+            // context.load(trackedChangeItem, "items");
+            // await context.sync();
             trackedChangeItem.items[0].accept();
             insertedItem.clear();
           }

@@ -52,10 +52,14 @@ export class DocumentHelpers {
           if (isStable) {
             /** если элемент без изменений - принимаем правку */
             trackedChangeItem.items[0].accept();
+            console.log("inputText", { inputText, isStable, isCreate, isDelete });
+            
           }
 
           if (isCreate) {
             /** новый элемент отобразится как правка в режиме рецензирования */
+            console.log("inputText", { inputText, isStable, isCreate, isDelete });
+
           }
 
           if (isDelete) {
@@ -65,6 +69,8 @@ export class DocumentHelpers {
             // const trackedChangeItem = insertedItem.getTrackedChanges();
             // context.load(trackedChangeItem, "items");
             // await context.sync();
+            console.log("inputText", { inputText, isStable, isCreate, isDelete });
+
             trackedChangeItem.items[0].accept();
             insertedItem.clear();
           }

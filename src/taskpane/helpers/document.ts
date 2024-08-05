@@ -23,12 +23,22 @@ export class DocumentHelpers {
       const findRange = await DocumentHelpers.findRange(context, searchText);
       findRange.clear();
       await context.sync();
-      const trackedChangeR = findRange.getTrackedChanges();
-      context.load(trackedChangeR, "items");
+      // const trackedChangeR = findRange.getTrackedChanges();
+
+      const bodyChanges = context.document.body.getTrackedChanges();
+      context.load(bodyChanges, "items");
       await context.sync();
-      console.log("trackedChangeR", trackedChangeR);
-      
-      trackedChangeR.getFirst().accept();
+
+      const bodyChangesItems = bodyChanges?.items;
+      const bodyChangesItemLast = bodyChangesItems[bodyChangesItems.length - 1];
+      console.log("bodyChanges", { bodyChangesItemLast, bodyChanges });
+
+      // context.load(trackedChangeR, "items");
+      // await context.sync();
+      // console.log("trackedChangeR", trackedChangeR);
+
+      bodyChangesItemLast.accept();
+      // trackedChangeR.getFirst().accept();
       // trackedChangeR.items[0].accept();
 
       /** Сборка новой строки по массиву отличий */
@@ -52,14 +62,12 @@ export class DocumentHelpers {
           if (isStable) {
             /** если элемент без изменений - принимаем правку */
             trackedChangeItem.items[0].accept();
-            console.log("inputText", { inputText, isStable, isCreate, isDelete });
-            
+            console.log("Stable inputText", { inputText });
           }
 
           if (isCreate) {
             /** новый элемент отобразится как правка в режиме рецензирования */
-            console.log("inputText", { inputText, isStable, isCreate, isDelete });
-
+            console.log("Create inputText", { inputText });
           }
 
           if (isDelete) {
@@ -69,7 +77,7 @@ export class DocumentHelpers {
             // const trackedChangeItem = insertedItem.getTrackedChanges();
             // context.load(trackedChangeItem, "items");
             // await context.sync();
-            console.log("inputText", { inputText, isStable, isCreate, isDelete });
+            console.log("Delete inputText", { inputText });
 
             trackedChangeItem.items[0].accept();
             insertedItem.clear();

@@ -23,6 +23,7 @@ export class DocumentHelpers {
       /** Очистка диапазона с исходным текстом */
       /** Применение изменений */
       const findRange = await DocumentHelpers.findRange(context, searchText);
+      findRange.track();
       findRange.clear();
       await context.sync();
 

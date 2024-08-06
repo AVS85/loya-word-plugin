@@ -11,6 +11,8 @@ export class DocumentHelpers {
    * @description функция собирает новую строку из массива различий и вставляет на место искомой строки, оставляя а режиме правок только измененные фрагменты строки
    */
   static async collectRowByDiffArray(searchText: string, changeText: string) {
+    console.log("=== collectRowByDiffArray ===================================");
+
     /** Подготовка массива различий между исходным текстом и правкой  */
     const differencesArray = getDifferencesSemantic(searchText, changeText);
     console.log("differencesArray", differencesArray);
@@ -23,27 +25,23 @@ export class DocumentHelpers {
       const findRange = await DocumentHelpers.findRange(context, searchText);
       findRange.clear();
       await context.sync();
-      // const trackedChangeR = findRange.getTrackedChanges();
 
-      const bodyChanges = context.document.body.getTrackedChanges();
-      context.load(bodyChanges, "items");
+      const trackedChanges = findRange.getTrackedChanges();
+      // const bodyChanges = context.document.body.getTrackedChanges();
+      context.load(trackedChanges, "items");
       await context.sync();
 
-      const bodyChangesItems = bodyChanges?.items;
-      const bodyChangesItemLast = bodyChangesItems[bodyChangesItems.length - 1];
-      console.log("bodyChanges", { bodyChangesItemLast, bodyChanges });
+      const trackedChangesItems = trackedChanges?.items;
+      const trackedChangesItemLast = trackedChangesItems[trackedChangesItems.length - 1];
+      console.log("bodyChanges", { trackedChanges, trackedChangesItems, trackedChangesItemLast });
 
-      // context.load(trackedChangeR, "items");
-      // await context.sync();
-      // console.log("trackedChangeR", trackedChangeR);
-
-      bodyChangesItemLast.accept();
-      // trackedChangeR.getFirst().accept();
-      // trackedChangeR.items[0].accept();
+      trackedChangesItemLast.accept();
 
       /** Сборка новой строки по массиву отличий */
       for (const diffItem of differencesArray) {
         try {
+          console.log("=== for === diffItem", diffItem);
+
           let isStable = diffItem[0] === 0;
           let isCreate = diffItem[0] === 1;
           let isDelete = diffItem[0] === -1;
@@ -53,33 +51,31 @@ export class DocumentHelpers {
           context.load(insertedItem, "text");
           await context.sync();
 
-          const trackedChangeItem = insertedItem.getTrackedChanges();
-          context.load(trackedChangeItem, "items");
+          const bodyChanges = context.document.body.getTrackedChanges();
+          context.load(bodyChanges, "items");
           await context.sync();
 
-          console.log("trackedChangeItem", trackedChangeItem);
+          const bodyChangesItems = bodyChanges?.items;
+          const bodyChangesItemLast = bodyChangesItems[bodyChangesItems.length - 1];
+          console.log("bodyChangesItemLast", bodyChangesItemLast);
 
           if (isStable) {
             /** если элемент без изменений - принимаем правку */
-            trackedChangeItem.items[0].accept();
-            console.log("Stable inputText", { inputText });
+            console.log("STABLE text", { inputText, bodyChangesItemLast: bodyChangesItemLast.text });
+            bodyChangesItemLast.accept();
           }
 
           if (isCreate) {
             /** новый элемент отобразится как правка в режиме рецензирования */
-            console.log("Create inputText", { inputText });
+            console.log("CREATE text", { inputText, bodyChangesItemLast: bodyChangesItemLast.text });
           }
 
           if (isDelete) {
             /** если элемент удален - сначала подтверждаем вставку
              * (чтобы добавилась запись в истории рецензирования), потом удаляем
              */
-            // const trackedChangeItem = insertedItem.getTrackedChanges();
-            // context.load(trackedChangeItem, "items");
-            // await context.sync();
-            console.log("Delete inputText", { inputText });
-
-            trackedChangeItem.items[0].accept();
+            console.log("DELETE text", { inputText, bodyChangesItemLast: bodyChangesItemLast.text });
+            bodyChangesItemLast.accept();
             insertedItem.clear();
           }
         } catch (error) {

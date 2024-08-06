@@ -30,6 +30,8 @@ export class DocumentHelpers {
 
       const trackedChanges = findRange.getTrackedChanges();
       // const bodyChanges = context.document.body.getTrackedChanges();
+      context.load(trackedChanges);
+      await context.sync();
       context.load(trackedChanges, "items");
       await context.sync();
 

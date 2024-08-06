@@ -23,8 +23,9 @@ export class DocumentHelpers {
       /** Очистка диапазона с исходным текстом */
       /** Применение изменений */
       const findRange = await DocumentHelpers.findRange(context, searchText);
-      findRange.track();
+
       findRange.clear();
+      findRange.insertText("", Word.InsertLocation.replace);
       await context.sync();
 
       const trackedChanges = findRange.getTrackedChanges();

@@ -25,7 +25,7 @@ export class DocumentHelpers {
       const findRange = await DocumentHelpers.findRange(context, searchText);
 
       findRange.clear();
-      findRange.insertText("", Word.InsertLocation.replace);
+      findRange.insertText("1", Word.InsertLocation.replace);
       await context.sync();
 
       const trackedChanges = findRange.getTrackedChanges();

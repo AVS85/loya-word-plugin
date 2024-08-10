@@ -29,6 +29,12 @@
         or to a Microsoft 365 account.
     </div> -->
     <script>
+      console.log('userAgent', 
+      {
+        "Trident": navigator.userAgent.indexOf("Trident") !== -1,
+        "Edge": navigator.userAgent.indexOf("Edge") !== -1
+      });
+      
         // if ((navigator.userAgent.indexOf("Trident") !== -1) || (navigator.userAgent.indexOf("Edge") !== -1)) {
         //     var tridentMessage = document.getElementById("tridentmessage");
         //     var normalContainer = document.getElementById("container");

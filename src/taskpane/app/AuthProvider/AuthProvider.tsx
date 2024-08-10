@@ -1,10 +1,11 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Button, Input, InputProps, Text } from "@fluentui/react-components";
+// import { Button, Input, InputProps, Text } from "@fluentui/react-components";
 import api from "../../api/v1";
 import { AuthStepperEnum } from "../../store/auth";
 import { useStores } from "../../store";
 import { observer } from "mobx-react";
 import { Outlet } from "react-router-dom";
+import { Button, Input, Text } from "../../components/atoms";
 
 const AuthProvider = () => {
   const { authStore } = useStores();
@@ -13,10 +14,10 @@ const AuthProvider = () => {
   const [login, setLogin] = useState("");
   const [isFetchingRequestLogin, setIsFetchingRequestLogin] = useState(false);
 
-  const onChange: InputProps["onChange"] = (_ev, data) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     authStore.setAuthStatus(AuthStepperEnum.LOGOUT);
-    if (data.value.length <= 30) {
-      setLogin(data.value);
+    if (e.target.value.length <= 30) {
+      setLogin(e.target.value);
     }
   };
 
@@ -68,14 +69,23 @@ const AuthProvider = () => {
           flex: 1,
         }}
       >
-        <Text as="h1" weight="bold" size={400}>
+        <Text
+          as="h1"
+          // weight="bold" size={400}
+        >
           Войти
         </Text>
         <Input value={login} onChange={onChange} placeholder="Введите логин" />
-        <Button onClick={handleRequestLogin} disabled={isDisabledSendButton}>
-          Отправить
-        </Button>
-        {isDisplayErrorMessage && <Text size={400}>Неверное имя пользователя</Text>}
+        {/* <Input value={login} onChange={onChange} placeholder="Введите логин" /> */}
+        <Button title="Отправить" onClick={handleRequestLogin} disabled={isDisabledSendButton} />
+
+        {isDisplayErrorMessage && (
+          <Text
+          // size={400}
+          >
+            Неверное имя пользователя
+          </Text>
+        )}
       </div>
     </>
   );

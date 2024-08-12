@@ -20,12 +20,12 @@ class ConfigStore {
         /** Включение записи исправлений при запуске плагина */
         Word.run(async (context) => {
           context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll;
-          await context.sync().then(function () {
-            console.log("Режим записывания исправлений включен");
-          });
-        }).catch((error) => {
-          console.log("err", error);
+          await context
+            .sync()
+            .then(() => console.log(`Статус запись исправлений: включена`))
+            .catch((error) => console.log(`Статус запись исправлений: n/a`, error));
         });
+
         /** Определение поддерживаемых api word'a функций плагина */
         const isApiExist_1_1 = Office.context.requirements.isSetSupported("WordApi", "1.1");
         const isApiExist_1_3 = Office.context.requirements.isSetSupported("WordApi", "1.3");

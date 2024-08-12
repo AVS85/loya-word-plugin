@@ -200,7 +200,11 @@ const SuggestionCard = (props: SuggestionPropT) => {
               size="medium"
               onClick={handleAddComment}
               disabled={rangeInsertComment === false}
-              style={{ borderColor: "#0f6cbd", borderWidth: "2px", whiteSpace: "nowrap" }}
+              style={{
+                borderColor: rangeInsertComment ? "#0f6cbd" : "transparent",
+                borderWidth: "2px",
+                whiteSpace: "nowrap",
+              }}
             >
               {T.buttonComment[locale]}
             </Button>

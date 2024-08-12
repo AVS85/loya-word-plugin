@@ -22,14 +22,7 @@ class RootStore {
     this.documentStore = new Document(this);
     this.menuStore = new Menu(this);
     this.suggestionsStore = new Suggestions(this);
-    autorun(() => {
-      Word.run(async (context) => {
-        context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll;
-        await context.sync().then(function () {
-          console.log("Режим записывания исправлений включен");
-        });
-      });
-    });
+
   }
 }
 

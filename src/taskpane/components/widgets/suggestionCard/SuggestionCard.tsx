@@ -84,7 +84,7 @@ const SuggestionCard = (props: SuggestionPropT) => {
   };
 
   const handleApplyChange = async () => {
-    DocumentHelpers.collectRowByDiffArray(sourceText, changeText)
+    DocumentHelpers.applyChange(sourceText, changeText)
       .then(() => {
         // suggestionsStore.setSuggestionProperty(indexSuggestion, { isApplyChange: true });
       })

@@ -41,7 +41,7 @@ const Summary = () => {
         // isApplyComment,
       } = itemSuggestion;
 
-      await DocumentHelpers.collectRowByDiffArray(sourceText, changeText)
+      await DocumentHelpers.applyChange(sourceText, changeText)
         .then(() => {
           // suggestionsStore.setSuggestionProperty(indexSuggestion, {
           //   isApplyChange: true,

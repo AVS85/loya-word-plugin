@@ -7,10 +7,34 @@ import { getDifferencesSemantic } from "./diff";
 const MAX_LENGTH_SEARCH_STRING = 200;
 
 export class DocumentHelpers {
+  static async applyChange(
+    // context: Word.RequestContext,
+    searchText: string,
+    editText: string
+  ) {
+    try {
+      console.log("[applyChange]", { searchText, editText });
+      // console.log("Office", { Office, isApi_1_3: Office.context.requirements.isSetSupported("WordApi", "1.3") });
+    } catch (error) {
+      console.log("error", error);
+      return null;
+    }
+  }
+
+  static async applyChangeBasic(context: Word.RequestContext, searchText: string, editText: string) {
+    try {
+      const range = await this.findRange(context, searchText);
+      range.insertText(editText, "Replace");
+    } catch (error) {
+      console.log("error", error);
+      return null;
+    }
+  }
+
   /**
    * @description функция собирает новую строку из массива различий и вставляет на место искомой строки, оставляя а режиме правок только измененные фрагменты строки
    */
-  static async collectRowByDiffArray(searchText: string, changeText: string) {
+  static async applyChangeSemantic(searchText: string, changeText: string) {
     /** Подготовка массива различий между исходным текстом и правкой  */
     const differencesArray = getDifferencesSemantic(searchText, changeText);
     console.log("differencesArray", differencesArray);
@@ -118,16 +142,6 @@ export class DocumentHelpers {
       // return null;
     }
   }
-
-  // static async applyChange(context: Word.RequestContext, searchText: string, editText: string) {
-  //   try {
-  //     const range = await this.findRange(context, searchText);
-  //     range.insertText(editText, "Replace");
-  //   } catch (error) {
-  //     console.log("error", error);
-  //     return null;
-  //   }
-  // }
 
   static async applyComment(sourceText: string, changeText: string, commentText: string) {
     await Word.run(async (context) => {

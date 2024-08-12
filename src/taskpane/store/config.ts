@@ -1,15 +1,15 @@
-import { autorun, makeAutoObservable } from "mobx";
+import { autorun, makeAutoObservable, runInAction } from "mobx";
 import type RootStore from ".";
-
-// export enum AuthStepperEnum {
-//   LOGOUT = "user.logout",
-//   LOGGED = "user.logged",
-//   FORBIDDEN = "access.forbidden",
-//   ERROR = "request.error",
-// }
-
 class ConfigStore {
   rootStore: RootStore;
+
+  /** Функции плагина поддерживаемые текущей версией офис  */
+  optionsSupportedCurrentApi = {
+    searchInBody: false,
+    rangeInsertComment: false,
+    rangeInsertText: false,
+    rangeInsertTextSemantic: false,
+  };
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
@@ -17,11 +17,20 @@ class ConfigStore {
 
     autorun(() => {
       Office.onReady((info) => {
-        console.log("info", info);
-        const isApi_1_3 = Office.context.requirements.isSetSupported("WordApi", "1.3");
-        const isApi_1_4 = Office.context.requirements.isSetSupported("WordApi", "1.4");
-        const isApi_1_6 = Office.context.requirements.isSetSupported("WordApi", "1.6");
-        console.log("Office", { Office, isApi_1_3, isApi_1_4, isApi_1_6 });
+        const isApiExist_1_1 = Office.context.requirements.isSetSupported("WordApi", "1.1");
+        const isApiExist_1_3 = Office.context.requirements.isSetSupported("WordApi", "1.3");
+        const isApiExist_1_4 = Office.context.requirements.isSetSupported("WordApi", "1.4");
+        const isApiExist_1_6 = Office.context.requirements.isSetSupported("WordApi", "1.6");
+        const optionsSupportedCurrentApi = {
+          searchInBody: isApiExist_1_3,
+          rangeInsertComment: isApiExist_1_4,
+          rangeInsertText: isApiExist_1_1,
+          rangeInsertTextSemantic: isApiExist_1_6,
+        };
+        runInAction(() => {
+          this.optionsSupportedCurrentApi = optionsSupportedCurrentApi;
+        });
+        console.log("CONFIG:", { info, Office, optionsSupportedCurrentApi });
       });
     });
   }

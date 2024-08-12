@@ -1,6 +1,6 @@
 /* global Word console */
 /// <reference types="office-js" />
-
+// import storeConfig from "../store/config";
 import { getDifferencesSemantic } from "./diff";
 
 // import
@@ -10,25 +10,32 @@ export class DocumentHelpers {
   static async applyChange(
     // context: Word.RequestContext,
     searchText: string,
-    editText: string
+    editText: string,
+    optionsSupportedCurrentApi: any
   ) {
     try {
       console.log("[applyChange]", { searchText, editText });
-      // console.log("Office", { Office, isApi_1_3: Office.context.requirements.isSetSupported("WordApi", "1.3") });
+      console.log("optionsSupportedCurrentApi", optionsSupportedCurrentApi);
+
+      const { rangeInsertText, rangeInsertTextSemantic } = optionsSupportedCurrentApi;
+      if (rangeInsertTextSemantic) {
+        this.applyChangeSemantic(searchText, editText);
+      } else if (rangeInsertText) {
+        this.applyChangeBasic(searchText, editText);
+      }
     } catch (error) {
       console.log("error", error);
       return null;
     }
   }
 
-  static async applyChangeBasic(context: Word.RequestContext, searchText: string, editText: string) {
-    try {
+  static async applyChangeBasic(searchText: string, changeText: string) {
+    await Word.run(async (context) => {
       const range = await this.findRange(context, searchText);
-      range.insertText(editText, "Replace");
-    } catch (error) {
-      console.log("error", error);
-      return null;
-    }
+      range.insertText(changeText, "Replace");
+    }).catch((error) => {
+      console.log("Error [handleShowInDocument]: " + error);
+    });
   }
 
   /**

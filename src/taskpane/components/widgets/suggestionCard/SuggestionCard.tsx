@@ -41,8 +41,9 @@ const T = {
 };
 
 const SuggestionCard = (props: SuggestionPropT) => {
-  const { suggestionsStore, menuStore } = useStores();
+  const { suggestionsStore, menuStore, configStore } = useStores();
   const { locale } = menuStore;
+  const { optionsSupportedCurrentApi } = configStore;
   // const [htmlString, setHtmlString] = useState<string | null>(null);
 
   const { data, index: indexSuggestion } = props;
@@ -84,7 +85,7 @@ const SuggestionCard = (props: SuggestionPropT) => {
   };
 
   const handleApplyChange = async () => {
-    DocumentHelpers.applyChange(sourceText, changeText)
+    DocumentHelpers.applyChange(sourceText, changeText, optionsSupportedCurrentApi)
       .then(() => {
         // suggestionsStore.setSuggestionProperty(indexSuggestion, { isApplyChange: true });
       })

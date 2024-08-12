@@ -44,6 +44,7 @@ const SuggestionCard = (props: SuggestionPropT) => {
   const { suggestionsStore, menuStore, configStore } = useStores();
   const { locale } = menuStore;
   const { optionsSupportedCurrentApi } = configStore;
+  const { rangeInsertComment } = optionsSupportedCurrentApi;
   // const [htmlString, setHtmlString] = useState<string | null>(null);
 
   const { data, index: indexSuggestion } = props;
@@ -198,6 +199,7 @@ const SuggestionCard = (props: SuggestionPropT) => {
               appearance="primary"
               size="medium"
               onClick={handleAddComment}
+              disabled={rangeInsertComment === false}
               style={{ borderColor: "#0f6cbd", borderWidth: "2px", whiteSpace: "nowrap" }}
             >
               {T.buttonComment[locale]}

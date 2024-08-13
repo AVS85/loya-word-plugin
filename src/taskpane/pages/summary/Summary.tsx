@@ -21,7 +21,7 @@ const Summary = () => {
   const { suggestionsStore, menuStore, configStore } = useStores();
   const { locale } = menuStore;
   const { optionsSupportedCurrentApi } = configStore;
-  const { rangeInsertComment } = optionsSupportedCurrentApi;
+  const { isAccessToRangeInsertComment } = optionsSupportedCurrentApi;
 
   const {
     // computedIsExistUntouchedSuggestions,
@@ -54,15 +54,15 @@ const Summary = () => {
           console.log("Error [handleApplyAll]: " + error);
         });
 
-        if (rangeInsertComment) {
-          await DocumentHelpers.applyComment(sourceText, changeText, commentText)
-            .then(() => {
-              suggestionsStore.setSuggestionProperty(indexSuggestion, { isApplyComment: true });
-            })
-            .catch((error) => {
-              console.log("Error [handleAddComment]: " + error);
-            });
-        }
+      if (isAccessToRangeInsertComment) {
+        await DocumentHelpers.applyComment(sourceText, changeText, commentText)
+          .then(() => {
+            suggestionsStore.setSuggestionProperty(indexSuggestion, { isApplyComment: true });
+          })
+          .catch((error) => {
+            console.log("Error [handleAddComment]: " + error);
+          });
+      }
       // await Word.run(async (context) => {
       //   const range = await DocumentHelpers.findRange(context, partContract);
       //   if (!isApplyChange) range.insertText(partModified, "Replace");

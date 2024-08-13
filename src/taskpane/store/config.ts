@@ -6,9 +6,9 @@ class ConfigStore {
   /** Функции плагина поддерживаемые текущей версией офис  */
   optionsSupportedCurrentApi = {
     searchInBody: false,
-    rangeInsertComment: false,
-    rangeInsertText: false,
-    rangeInsertTextSemantic: false,
+    isAccessToRangeInsertComment: false,
+    isAccessToRangeInsertText: false,
+    isAccessToRangeInsertTextSemantic: false,
   };
 
   constructor(rootStore: RootStore) {
@@ -37,9 +37,9 @@ class ConfigStore {
 
         const optionsSupportedCurrentApi = {
           searchInBody: isApiExist_1_3,
-          rangeInsertComment: isApiExist_1_4,
-          rangeInsertText: isApiExist_1_1,
-          rangeInsertTextSemantic: isPlatformOnline ? false : isApiExist_1_6, //TODO: нужен фикс для онлайн версии
+          isAccessToRangeInsertComment: isApiExist_1_4,
+          isAccessToRangeInsertText: isApiExist_1_1,
+          isAccessToRangeInsertTextSemantic: isPlatformOnline ? false : isApiExist_1_6, //TODO: нужен фикс для онлайн версии
         };
         runInAction(() => {
           this.optionsSupportedCurrentApi = optionsSupportedCurrentApi;

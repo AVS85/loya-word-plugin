@@ -17,10 +17,10 @@ export class DocumentHelpers {
       console.log("[applyChange]", { searchText, editText });
       console.log("optionsSupportedCurrentApi", optionsSupportedCurrentApi);
 
-      const { rangeInsertText, rangeInsertTextSemantic } = optionsSupportedCurrentApi;
-      if (rangeInsertTextSemantic) {
+      const { isAccessToRangeInsertText, isAccessToRangeInsertTextSemantic } = optionsSupportedCurrentApi;
+      if (isAccessToRangeInsertTextSemantic) {
         this.applyChangeSemantic(searchText, editText);
-      } else if (rangeInsertText) {
+      } else if (isAccessToRangeInsertText) {
         this.applyChangeBasic(searchText, editText);
       }
     } catch (error) {

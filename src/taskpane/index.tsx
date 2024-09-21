@@ -35,9 +35,6 @@ const appTheme = createTheme({
 });
 /* Render application after Office initializes */
 Office.onReady(() => {
-  let obj: any;
-  console.log(obj.property); // TypeError: Cannot read properties of undefined (reading 'property')
-
   root.render(
     <FluentProvider theme={webLightTheme}>
       <ThemeProvider theme={appTheme}>

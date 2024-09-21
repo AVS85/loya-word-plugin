@@ -30,7 +30,11 @@ class DocumentStore {
       () => this.textContractSource,
       () => {
         if (this.textContractSource?.length > 0) {
-          if (APP_SET_ANONYMIZER) this.buildAnonymizedText();
+          try {
+            if (APP_SET_ANONYMIZER) this.buildAnonymizedText();
+          } catch (error) {
+            console.log("[buildAnonymizedText] ERROR:", error);
+          }
           this.rootStore.suggestionsStore.requestParties();
         }
       }

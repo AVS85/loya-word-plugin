@@ -3,12 +3,12 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import type RootStore from ".";
 import {
-  replaceCompanyNames,
+  // replaceCompanyNames,
   removeAddressesByPart,
-  removeAmountByPart,
-  removeContract,
-  removePayment,
-  removePersonData,
+  // removeAmountByPart,
+  // removeContract,
+  // removePayment,
+  // removePersonData,
 } from "../helpers/anonymizer";
 const APP_SET_ANONYMIZER = process.env.APP_SET_ANONYMIZER === "true";
 

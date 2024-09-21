@@ -34,7 +34,9 @@ const appTheme = createTheme({
   },
 });
 /* Render application after Office initializes */
-Office.onReady(() => {
+Office.onReady((info) => {
+  console.log("Office.onReady((info))", info);
+
   root.render(
     <FluentProvider theme={webLightTheme}>
       <ThemeProvider theme={appTheme}>

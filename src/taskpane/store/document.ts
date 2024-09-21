@@ -56,7 +56,7 @@ class DocumentStore {
     runInAction(() => {
       this.textContractAnonymized = (() => {
         let modText = "";
-        // modText = removeAddressesByPart(docText);
+        modText = removeAddressesByPart(docText);
         // modText = removeAmountByPart(modText);
         // modText = removePersonData(modText);
         // modText = removeContract(modText);

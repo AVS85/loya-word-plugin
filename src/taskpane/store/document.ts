@@ -56,11 +56,11 @@ class DocumentStore {
     runInAction(() => {
       this.textContractAnonymized = (() => {
         let modText = "";
-        modText = removeAddressesByPart(docText);
-        modText = removeAmountByPart(modText);
+        // modText = removeAddressesByPart(docText);
+        // modText = removeAmountByPart(modText);
         modText = removePersonData(modText);
-        modText = removeContract(modText);
-        modText = removePayment(modText);
+        // modText = removeContract(modText);
+        // modText = removePayment(modText);
         // modText = replaceCompanyNames(modText);
         return modText;
       })();

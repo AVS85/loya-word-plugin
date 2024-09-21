@@ -55,20 +55,14 @@ class DocumentStore {
     if (typeof docText !== "string") return null;
     runInAction(() => {
       this.textContractAnonymized = (() => {
-        try {
-          let modText = "";
-          modText = removeAddressesByPart(docText);
-          modText = removeAmountByPart(modText);
-          modText = removePersonData(modText);
-          modText = removeContract(modText);
-          modText = removePayment(modText);
-          modText = replaceCompanyNames(modText);
-          return modText;
-        } catch (error) {
-          console.log("buildAnonymizedText catch", error);
-
-          return docText;
-        }
+        let modText = "";
+        modText = removeAddressesByPart(docText);
+        modText = removeAmountByPart(modText);
+        modText = removePersonData(modText);
+        modText = removeContract(modText);
+        modText = removePayment(modText);
+        // modText = replaceCompanyNames(modText);
+        return modText;
       })();
     });
   };
